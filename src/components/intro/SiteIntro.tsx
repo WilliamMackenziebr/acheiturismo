@@ -19,6 +19,16 @@ export function SiteIntro() {
   const [canSkip, setCanSkip] = useState(false);
   const hasStartedRef = useRef(false);
   const isExitingRef = useRef(false);
+  const previousOverflowRef = useRef<{ body: string; html: string } | null>(null);
+
+  const unlockPageScroll = useCallback(() => {
+    const previousOverflow = previousOverflowRef.current;
+    if (!previousOverflow) return;
+
+    document.body.style.overflow = previousOverflow.body;
+    document.documentElement.style.overflow = previousOverflow.html;
+    previousOverflowRef.current = null;
+  }, []);
 
   const finishIntro = useCallback(() => {
     if (isExitingRef.current) return;
@@ -33,12 +43,13 @@ export function SiteIntro() {
 
     document.documentElement.classList.remove("achei-intro-active");
     document.documentElement.classList.add("achei-intro-revealing");
+    unlockPageScroll();
     setIsVisible(false);
 
     window.setTimeout(() => {
       document.documentElement.classList.remove("achei-intro-revealing");
     }, HOME_REVEAL_DURATION_MS);
-  }, []);
+  }, [unlockPageScroll]);
 
   useEffect(() => {
     let hasPlayed = false;
@@ -65,8 +76,10 @@ export function SiteIntro() {
 
     document.documentElement.classList.add("achei-intro-active");
 
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
+    previousOverflowRef.current = {
+      body: document.body.style.overflow,
+      html: document.documentElement.style.overflow,
+    };
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
@@ -79,17 +92,17 @@ export function SiteIntro() {
     return () => {
       window.clearTimeout(skipTimer);
       window.clearTimeout(endTimer);
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      unlockPageScroll();
       document.documentElement.classList.remove("achei-intro-active");
     };
-  }, [finishIntro, prefersReducedMotion]);
+  }, [finishIntro, prefersReducedMotion, unlockPageScroll]);
 
   const handleExitComplete = useCallback(() => {
+    unlockPageScroll();
     document.documentElement.dataset.acheiIntroPlayed = "true";
     setIsMounted(false);
     window.dispatchEvent(new Event(INTRO_COMPLETE_EVENT));
-  }, []);
+  }, [unlockPageScroll]);
 
   if (!isMounted) return null;
 
