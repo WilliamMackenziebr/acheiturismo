@@ -1,0 +1,116 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147481000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(2 18 11 / 78%);
+  backdrop-filter: blur(12px);
+}
+
+.mapPanel {
+  width: min(1040px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 26px;
+  background: var(--cream);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 40%);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 100px;
+  padding: 20px 24px;
+  color: white;
+  background: var(--green-950);
+}
+
+.header div {
+  display: grid;
+  gap: 4px;
+}
+
+.header span {
+  color: var(--lime);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.header strong {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+}
+
+.header small {
+  color: rgb(255 255 255 / 68%);
+}
+
+.header button {
+  min-width: 74px;
+  min-height: 42px;
+  padding: 0 15px;
+  color: white;
+  font-weight: 700;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.header button:hover,
+.header button:focus-visible {
+  color: var(--green-950);
+  background: var(--lime);
+}
+
+.header button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+
+.mapFrame {
+  position: relative;
+  width: 100%;
+  height: min(68dvh, 680px);
+  min-height: 360px;
+  background: #dfe5db;
+}
+
+.mapFrame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 700px) {
+  .backdrop {
+    align-items: end;
+    padding: 0;
+  }
+
+  .mapPanel {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .header {
+    min-height: 90px;
+    padding: 16px 18px;
+  }
+
+  .mapFrame {
+    height: 72dvh;
+    min-height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .mapPanel { transition: none; }
+}

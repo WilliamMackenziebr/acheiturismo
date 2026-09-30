@@ -1,0 +1,87 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #003b27;
+  transform-origin: center;
+}
+
+:global(html[data-achei-intro-played="true"]) .intro {
+  display: none;
+}
+
+.video,
+.reducedMotionLogo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  background: #003b27;
+}
+
+.video {
+  object-fit: cover;
+}
+
+.reducedMotionLogo {
+  object-fit: contain;
+  animation: reduced-logo-reveal 180ms ease-out both;
+}
+
+.skipButton {
+  position: absolute;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 2;
+  min-height: 44px;
+  padding: 10px 18px;
+  color: #fff;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 999px;
+  background: rgb(0 29 19 / 64%);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.skipButton:hover {
+  border-color: rgb(255 255 255 / 48%);
+  background: rgb(0 29 19 / 82%);
+  transform: translateY(-2px);
+}
+
+.skipButton:focus-visible {
+  outline: 2px solid #c7ff20;
+  outline-offset: 3px;
+}
+
+@keyframes reduced-logo-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 767px) {
+  .skipButton {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reducedMotionLogo { animation: none; }
+  .skipButton { transition: none; }
+}
