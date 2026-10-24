@@ -59,7 +59,7 @@ export function PhotoGallery({ images, placeName }: PhotoGalleryProps) {
             aria-label={`Abrir foto ${index + 1} de ${placeName}`}
             key={`${src}-${index}`}
           >
-            <Image src={src} alt={`${placeName} — foto ${index + 1}`} fill sizes="(max-width: 700px) 50vw, 25vw" />
+            <Image src={src} unoptimized={src.startsWith("http") || src.startsWith("data:")} alt={`${placeName} — foto ${index + 1}`} fill sizes="(max-width: 700px) 50vw, 25vw" />
             <span className={styles.expandIcon} aria-hidden="true"><ArrowsOut size={18} /></span>
           </button>
         ))}
@@ -97,6 +97,7 @@ export function PhotoGallery({ images, placeName }: PhotoGalleryProps) {
             >
               <Image
                 src={images[activeIndex]}
+                unoptimized={images[activeIndex].startsWith("http") || images[activeIndex].startsWith("data:")}
                 alt={`${placeName} — foto ${activeIndex + 1} ampliada`}
                 fill
                 sizes="100vw"

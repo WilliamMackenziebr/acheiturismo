@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "achei-turismo-db-bridge",
+  "main": "worker.js",
+  "account_id": "c9a043eebb2d4057118daf263b51f53d",
+  "compatibility_date": "2026-10-23",
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "achei-turismo-db",
+      "database_id": "8be8f940-bb0f-4c96-bd35-c7fa74b4369b"
+    }
+  ]
+}

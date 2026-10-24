@@ -129,6 +129,9 @@ main { min-height:calc(100vh - 76px); }
   .partner-badge--detail { left:20px; bottom:34px; } .event-detail__image { aspect-ratio:1.4; } .event-facts { flex-direction:column; align-items:flex-start; gap:10px; }
 }
 
+.catalog-notice { padding:14px 18px; background:#edf3e5; border-radius:10px; color:#536c40; font-size:12px; line-height:1.6; }
+.catalog-empty { padding:35px 0; color:var(--muted); font-size:14px; }
+
 /* Premium cinematic home */
 .premium-home { overflow:hidden; background:#f3f2eb; }
 .cinematic-hero { position:relative; height:calc(100svh - 76px); min-height:680px; overflow:hidden; isolation:isolate; color:#fff; background:var(--green-950); }

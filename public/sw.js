@@ -1,4 +1,4 @@
-const CACHE_NAME = "achei-turismo-v1";
+const CACHE_NAME = "achei-turismo-v2";
 const APP_SHELL = ["/", "/manifest.webmanifest", "/icons/achei-icon-192.png", "/icons/achei-icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -16,6 +16,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
+  if (new URL(request.url).pathname.startsWith("/admin")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(fetch(request).catch(() => caches.match("/")));

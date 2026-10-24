@@ -28,6 +28,9 @@ coverage/
 
 # Local tooling and operating system files
 .vercel/
+.wrangler/
+.local/
+cloudflare/.dev.vars*
 .DS_Store
 Thumbs.db
 Desktop.ini

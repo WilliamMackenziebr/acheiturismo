@@ -6,9 +6,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import type { ReactNode } from "react";
-import { SiteIntro } from "@/components/intro/SiteIntro";
 import { AppShell } from "@/components/layout/AppShell";
-import { SmoothScrollProvider } from "@/components/motion/SmoothScrollProvider";
 
 export const metadata: Metadata = {
   title: "Achei Turismo",
@@ -28,17 +26,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <Script id="achei-intro-session" strategy="beforeInteractive">
           {`try{if(sessionStorage.getItem("acheiTurismoIntroPlayed")==="true"){document.documentElement.dataset.acheiIntroPlayed="true"}}catch{}`}
         </Script>
       </head>
       <body>
-        <SiteIntro />
-        <SmoothScrollProvider>
-          <AppShell>{children}</AppShell>
-        </SmoothScrollProvider>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

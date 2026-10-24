@@ -6,20 +6,25 @@ import {
   ArrowRight,
   Buildings,
   CalendarDots,
+  Compass,
   ForkKnife,
   Gift,
   MapPin,
 } from "@phosphor-icons/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { events } from "@/data/events";
-import { places } from "@/data/places";
+import { useCatalog } from "@/components/tourism/CatalogProvider";
 import { CinematicHero } from "./CinematicHero";
 import { ExperienceSlider } from "./ExperienceSlider";
 import { HomePlaceCard } from "./HomePlaceCard";
 
 export function PremiumHome() {
-  const stays = places.filter((place) => place.kind === "hospedagem");
-  const food = places.filter((place) => place.kind === "restaurante");
+  const { places } = useCatalog();
+  const stays = places.filter((place) => place.kind === "hospedagem").sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const food = places.filter((place) => place.kind === "restaurante").sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const nature = places.filter(place => place.entryKind === "nature").sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const destinations = places.filter(place => place.entryKind === "destination").sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const featuredGuides = places.filter(place => place.kind === "guia" && place.featured);
 
   return (
     <div className="premium-home">
@@ -101,6 +106,8 @@ export function PremiumHome() {
         </div>
       </section>
 
+      {!!featuredGuides.length && <section className="stays-section container"><Reveal className="collection-heading"><div><Compass /><span className="section-index">GUIAS DO ACHEI</span><h2>Quem conhece, mostra o caminho.</h2></div><Link href="/guias">Conhecer os guias <ArrowRight /></Link></Reveal><div className="premium-grid">{featuredGuides.map((place, index) => <HomePlaceCard place={place} index={index} key={place.id} />)}</div></section>}
+
       <section className="food-feature">
         <div className="food-feature__media">
           <Image
@@ -134,6 +141,8 @@ export function PremiumHome() {
           </div>
         </div>
       </section>
+
+      {[{ items: nature, title: "Trilhas e ecoturismo", subtitle: "NATUREZA PARA VIVER", href: "/trilhas-ecoturismo", icon: Compass }, { items: destinations, title: "Destinos imperdíveis", subtitle: "LUGARES PARA GUARDAR NA MEMÓRIA", href: "/destinos", icon: MapPin }].filter(section => section.items.length).map(({ items, title, subtitle, href, icon: Icon }) => <section className="collection-section container" key={href}><Reveal className="collection-heading"><div><Icon /><span className="section-index">{subtitle}</span><h2>{title}</h2></div><Link href={href}>Ver todos os achados <ArrowRight /></Link></Reveal><div className="premium-grid">{items.slice(0, 4).map((place, index) => <HomePlaceCard place={place} index={index} key={place.id} />)}</div></section>)}
 
       <section className="events-section container">
         <Reveal className="collection-heading">
